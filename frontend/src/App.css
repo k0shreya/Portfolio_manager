@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  background-color: #f1f5f9;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #0f172a;
+}
+
+.app-container {
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: #0f172a;
+  color: white;
+  padding: 18px 32px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.app-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+/* Sections */
+.top-section {
+  margin-bottom: 32px;
+}
+
+.actions-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}

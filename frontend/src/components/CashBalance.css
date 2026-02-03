@@ -1,0 +1,19 @@
+/* CashBalance.css */
+.cash-balance-container {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+}
+
+.cash-balance-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.cash-balance-amount {
+  font-size: 36px;
+  font-weight: 800;
+  margin-top: 6px;
+}
