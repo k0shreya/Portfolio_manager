@@ -21,6 +21,7 @@ public class PortfolioItemServiceImp implements PortfolioItemService {
 
     private final PortfolioItemRepository portfolioItemRepository;
     private final CashBalanceRepository cashBalanceRepository;
+    private final TransactionLogRepository transactionLogRepository;
     private final RestTemplate restTemplate;
 
     // ---------- CASH ----------
@@ -71,6 +72,14 @@ public class PortfolioItemServiceImp implements PortfolioItemService {
         cash.setBalance(cash.getBalance() - cost);
         cashBalanceRepository.save(cash);
 
+        logTransaction(
+                request.getSymbol(),
+                request.getAssetType(),
+                request.getQuantity(),
+                -cost,                 // BUY = negative
+                TransactionType.BUY
+        );
+
         PortfolioItem item = portfolioItemRepository
                 .findBySymbolAndAssetType(
                         request.getSymbol(),
@@ -120,6 +129,13 @@ public class PortfolioItemServiceImp implements PortfolioItemService {
         CashBalance cash = getOrCreateCash();
         cash.setBalance(cash.getBalance() + revenue);
         cashBalanceRepository.save(cash);
+        logTransaction(
+                request.getSymbol(),
+                request.getAssetType(),
+                request.getQuantity(),
+                revenue,               // SELL = positive
+                TransactionType.SELL
+        );
 
         int remaining = item.getQuantity() - request.getQuantity();
         if (remaining == 0) {
@@ -231,5 +247,44 @@ public class PortfolioItemServiceImp implements PortfolioItemService {
             return 100.0; // fallback
         }
     }
+
+    private void logTransaction(
+            String symbol,
+            AssetType assetType,
+            int quantity,
+            double amount,
+            TransactionType type
+    ) {
+        TransactionLog tx = TransactionLog.builder()
+                .transactionId(java.util.UUID.randomUUID().toString())
+                .symbol(symbol)
+                .assetType(assetType)
+                .quantity(quantity)
+                .amount(amount)
+                .transactionType(type)
+                .build();
+
+        transactionLogRepository.save(tx);
+    }
+
+    public List<TransactionResponse> getAllTransactions() {
+
+        return transactionLogRepository
+                .findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(tx -> TransactionResponse.builder()
+                        .transactionId(tx.getTransactionId())
+                        .symbol(tx.getSymbol())
+                        .assetType(tx.getAssetType().name())
+                        .quantity(tx.getQuantity())
+                        .amount(tx.getAmount())
+                        .transactionType(tx.getTransactionType().name())
+                        .createdAt(tx.getCreatedAt())
+                        .build()
+                )
+                .toList();
+    }
+
+
 
 }

@@ -3,6 +3,7 @@ import CashBalance from "./components/CashBalance";
 import BuyAsset from "./components/BuyAsset";
 import SellAsset from "./components/SellAsset";
 import Dashboard from "./components/Dashboard";
+import TransactionLog from "./components/TransactionLog";
 import "./App.css";
 
 function App() {
@@ -58,6 +59,13 @@ function App() {
         >
           Sell Asset
         </button>
+
+        <button
+          className={activeView === "transactions" ? "active" : ""}
+          onClick={() => setActiveView("transactions")}
+        >
+          Transactions
+        </button>
       </nav>
 
       {/* ===== Main Content ===== */}
@@ -66,6 +74,7 @@ function App() {
         {activeView === "cash" && <CashBalance />}
         {activeView === "buy" && <BuyAsset />}
         {activeView === "sell" && <SellAsset />}
+        {activeView === "transactions" && <TransactionLog />}
       </main>
     </div>
   );

@@ -31,7 +31,7 @@
 
 .buy-asset-form input:focus {
   outline: none;
-  border-color: var(--primary-focus);
+  border-color: var(--input-focus);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 

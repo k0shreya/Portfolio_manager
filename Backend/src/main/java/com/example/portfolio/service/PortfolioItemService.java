@@ -2,6 +2,8 @@ package com.example.portfolio.service;
 
 import com.example.portfolio.dto.*;
 
+import java.util.List;
+
 public interface PortfolioItemService {
 
     void buyAsset(BuyRequest request);
@@ -13,4 +15,6 @@ public interface PortfolioItemService {
     CashResponse getCash();
 
     CashResponse updateCash(CashUpdateRequest request);
+
+    List<TransactionResponse> getAllTransactions();
 }
