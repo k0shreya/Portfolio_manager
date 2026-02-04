@@ -2,11 +2,10 @@ package com.example.portfolio.controller;
 
 import com.example.portfolio.dto.*;
 import com.example.portfolio.service.PortfolioItemService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/portfolio-items")
@@ -17,6 +16,7 @@ public class PortfolioItemController {
     public PortfolioItemController(PortfolioItemService portfolioItemService) {
         this.portfolioItemService = portfolioItemService;
     }
+
     @PostMapping("/buy")
     public void buy(@RequestBody BuyRequest request) {
         portfolioItemService.buyAsset(request);
@@ -42,4 +42,22 @@ public class PortfolioItemController {
         return portfolioItemService.updateCash(request);
     }
 
+    // ✅ Yahoo symbol search (FIXED)
+    @GetMapping("/yahoo/search")
+    public ResponseEntity<String> searchYahoo(@RequestParam String q) {
+
+        String url = "https://query1.finance.yahoo.com/v1/finance/search?q="
+                + q + "&quotesCount=5&newsCount=0";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("User-Agent", "Mozilla/5.0");
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response =
+                restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
+        return ResponseEntity.ok(response.getBody());
+    }
 }
