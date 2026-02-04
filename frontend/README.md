@@ -1,6 +1,22 @@
-# Getting Started with Create React App
+# Portfolio Manager Frontend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Environment Setup
+
+### Gemini AI Chatbot
+
+To enable the AI chatbot feature, you need to set up a Google Gemini API key:
+
+1. Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create a `.env` file in the `frontend` directory
+3. Add the following line:
+   ```
+   REACT_APP_GEMINI_API_KEY=your_api_key_here
+   ```
+4. Restart the development server
+
+**Note:** The chatbot will display a warning if the API key is not set, but the rest of the application will function normally.
 
 ## Available Scripts
 

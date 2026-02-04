@@ -1,30 +1,16 @@
 /* ===== Container ===== */
 .transaction-container {
-  margin-top: 24px;
-  padding: 24px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  border-radius: 14px;
-  border: 1px solid var(--card-border);
-  box-shadow: var(--card-shadow);
+  padding: 0;
+  color: var(--text-primary);
 }
 
 /* ===== Title ===== */
 .transaction-container h3 {
-  margin-bottom: 20px;
-  font-size: 20px;
+  margin-bottom: 24px;
+  font-size: 24px;
   font-weight: 700;
+  color: var(--text-primary);
   position: relative;
-}
-
-.transaction-container h3::after {
-  content: "";
-  display: block;
-  width: 48px;
-  height: 3px;
-  margin-top: 6px;
-  background-color: var(--primary-btn);
-  border-radius: 2px;
 }
 
 /* ===== Summary Cards ===== */
@@ -37,9 +23,10 @@
 
 .card {
   background-color: var(--card-bg);
-  padding: 16px;
+  padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
 }
 
 .card h4 {
@@ -51,14 +38,15 @@
 }
 
 .card p {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--primary-btn);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
 }
 
 /* Neutral value (Amount Invested) */
 .neutral {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* ===== Filter Bar ===== */
@@ -97,18 +85,20 @@
 
 /* ===== Export Button ===== */
 .export-btn {
-  padding: 8px 16px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 8px;
   border: none;
-  background-color: var(--primary-btn);
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
   color: white;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .export-btn:hover {
-  background-color: var(--primary-btn-hover);
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 /* ===== Table ===== */
@@ -140,6 +130,7 @@
   font-size: 14px;
   text-align: center;
   border-bottom: 1px solid var(--table-border);
+  color: var(--text-primary);
 }
 
 .transaction-table tbody tr:hover {

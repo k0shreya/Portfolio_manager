@@ -1,16 +1,18 @@
 .buy-asset-container {
   background-color: var(--card-bg);
-  padding: 22px;
-  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  padding: 32px;
+  border-radius: 12px;
   box-shadow: var(--card-shadow);
+  max-width: 600px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .buy-asset-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 16px;
-  color: var(--text-color);
+  margin-bottom: 24px;
+  color: var(--text-primary);
 }
 
 .buy-asset-form {
@@ -37,40 +39,36 @@
 
 .buy-asset-button {
   margin-top: 10px;
-  background-color: var(--primary-btn);
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
   color: white;
-  padding: 12px;
+  padding: 12px 24px;
   border-radius: 8px;
   border: none;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .buy-asset-button:hover {
-  background-color: var(--primary-btn-hover);
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 input::placeholder {
   color: var(--input-placeholder);
 }
 
-.buy-asset-form input {
-  color: var(--text-color);
-  caret-color: var(--text-color);
+.buy-asset-form input,
+.buy-asset-form select {
+  color: var(--text-primary) !important;
+  caret-color: var(--text-primary);
+  -webkit-text-fill-color: var(--text-primary);
+  background-color: var(--input-bg);
 }
 
 .buy-asset-form input::placeholder {
   color: var(--input-placeholder);
-}
-
-
-
-.buy-asset-form input{
-  color: var(--text-color) !important;
-  caret-color: var(--text-color);
-  -webkit-text-fill-color: var(--text-color); /* 🔑 REQUIRED */
-  background-color: var(--input-bg);
 }
 .symbol-input-wrapper {
   position: relative;

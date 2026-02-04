@@ -1,16 +1,17 @@
 .sell-asset-container {
   background-color: var(--card-bg);
-  padding: 22px;
-  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  padding: 32px;
+  border-radius: 12px;
   box-shadow: var(--card-shadow);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .sell-asset-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 16px;
-  color: var(--text-color);
+  margin-bottom: 24px;
+  color: var(--text-primary);
 }
 
 .sell-asset-form {
@@ -39,16 +40,18 @@
   margin-top: 10px;
   background-color: var(--danger-btn);
   color: white;
-  padding: 12px;
+  padding: 10px 20px;
   border-radius: 8px;
   border: none;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .sell-asset-button:hover {
   background-color: var(--danger-btn-hover);
+  transform: translateY(-1px);
 }
 input::placeholder {
   color: var(--input-placeholder);
@@ -67,9 +70,9 @@ input::placeholder {
 
 
 .sell-asset-form input {
-  color: var(--text-color) !important;
-  caret-color: var(--text-color);
-  -webkit-text-fill-color: var(--text-color); /* 🔑 REQUIRED */
+  color: var(--text-primary) !important;
+  caret-color: var(--text-primary);
+  -webkit-text-fill-color: var(--text-primary);
   background-color: var(--input-bg);
 }
 
@@ -110,6 +113,10 @@ input::placeholder {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  background-color: var(--bg-primary);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
 }
 
 .sell-header,
@@ -118,20 +125,41 @@ input::placeholder {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 12px;
   align-items: center;
+  padding: 12px;
 }
 
 .sell-header {
   font-weight: 700;
-  padding-bottom: 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--card-border);
+  background-color: transparent;
+}
+
+.sell-row {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.sell-row:hover {
+  background-color: var(--bg-secondary);
 }
 
 .sell-row input {
-  padding: 6px 8px;
+  padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid var(--input-border);
   background-color: var(--input-bg);
-  color: var(--text-color);
+  color: var(--text-primary);
+}
+
+.sell-row span {
+  color: var(--text-primary);
+  font-size: 14px;
 }
 
 .error-text {
