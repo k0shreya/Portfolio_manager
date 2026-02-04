@@ -73,3 +73,106 @@ input::placeholder {
   background-color: var(--input-bg);
 }
 
+
+.symbol-input-wrapper {
+  position: relative;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 20;
+}
+
+.suggestions-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.suggestions-list li:hover {
+  background-color: rgba(100, 116, 139, 0.15);
+}
+
+.muted {
+  color: var(--muted-text);
+  font-size: 13px;
+}
+
+.sell-table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sell-header,
+.sell-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.sell-header {
+  font-weight: 700;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.sell-row input {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+.error-text {
+  color: #ef4444;
+  margin-top: 12px;
+}
+/* ===== Toast ===== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  animation: slideIn 0.3s ease;
+  z-index: 1000;
+}
+
+.toast.success {
+  background-color: #16a34a;
+}
+
+.toast.error {
+  background-color: #dc2626;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Optional */
+.error-text {
+  color: #ef4444;
+  margin-top: 12px;
+}

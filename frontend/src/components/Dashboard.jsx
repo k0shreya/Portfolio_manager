@@ -12,7 +12,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer,
+  ResponsiveContainer
 } from "recharts";
 
 function Dashboard() {
@@ -35,7 +35,7 @@ function Dashboard() {
 
   /* ================= DATA TRANSFORMATION ================= */
 
-  // ---- Pie: Asset allocation (Stock vs Crypto)
+  // ---- Pie: Asset allocation by type
   const assetTypeMap = {};
   data.assets.forEach((a) => {
     const value = a.quantity * a.currentPrice;
@@ -45,19 +45,19 @@ function Dashboard() {
 
   const pieData = Object.keys(assetTypeMap).map((type) => ({
     name: type,
-    value: Number(assetTypeMap[type].toFixed(2)),
+    value: Number(assetTypeMap[type].toFixed(2))
   }));
 
   // ---- Bar: Value by symbol
   const barData = data.assets.map((a) => ({
     symbol: a.symbol,
-    value: Number((a.quantity * a.currentPrice).toFixed(2)),
+    value: Number((a.quantity * a.currentPrice).toFixed(2))
   }));
 
   // ---- Line: Profit / Loss by symbol
   const lineData = data.assets.map((a) => ({
     symbol: a.symbol,
-    pnl: Number(a.profitOrLoss.toFixed(2)),
+    pnl: Number(a.profitOrLoss.toFixed(2))
   }));
 
   const COLORS = ["#3b82f6", "#22c55e", "#f97316", "#ef4444"];
@@ -72,7 +72,9 @@ function Dashboard() {
       <div className="dashboard-summary">
         <div className="summary-card">
           <p className="summary-label">Cash Balance</p>
-          <p className="summary-value">$ {formatAmount(data.cashBalance)}</p>
+          <p className="summary-value">
+            $ {formatAmount(data.cashBalance)}
+          </p>
         </div>
 
         <div className="summary-card">
@@ -92,21 +94,24 @@ function Dashboard() {
 
       {/* ===== Charts Section ===== */}
       <div className="dashboard-charts">
-        {/* Pie Chart */}
+        {/* ===== Pie Chart ===== */}
         <div className="chart-card">
           <h4>Asset Allocation</h4>
-          <ResponsiveContainer width="100%" height={260}>
+
+          <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie
                 data={pieData}
                 dataKey="value"
                 nameKey="name"
-                outerRadius={90}
-                label
+                outerRadius={80}
+                label={({ percent }) =>
+                  `${(percent * 100).toFixed(1)}%`
+                }
               >
-                {pieData.map((_, index) => (
+                {pieData.map((entry, index) => (
                   <Cell
-                    key={index}
+                    key={entry.name}
                     fill={COLORS[index % COLORS.length]}
                   />
                 ))}
@@ -114,9 +119,27 @@ function Dashboard() {
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
+
+          {/* ✅ Custom legend (inside card, not SVG) */}
+          <div className="pie-legend">
+            {pieData.map((entry, index) => (
+              <div key={entry.name} className="legend-item">
+                <span
+                  className="legend-color"
+                  style={{
+                    backgroundColor:
+                      COLORS[index % COLORS.length]
+                  }}
+                />
+                <span className="legend-text">
+                  {entry.name}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Bar Chart */}
+        {/* ===== Bar Chart ===== */}
         <div className="chart-card">
           <h4>Value by Symbol</h4>
           <ResponsiveContainer width="100%" height={260}>
@@ -129,7 +152,7 @@ function Dashboard() {
           </ResponsiveContainer>
         </div>
 
-        {/* Line Chart */}
+        {/* ===== Line Chart ===== */}
         <div className="chart-card">
           <h4>Profit / Loss</h4>
           <ResponsiveContainer width="100%" height={260}>

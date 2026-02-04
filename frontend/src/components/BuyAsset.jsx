@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { buyAsset } from "../api/portfolioApi";
+import { searchYahooSymbols } from "../api/yahooApi";
 import "./BuyAsset.css";
 
 function BuyAsset() {
@@ -9,45 +10,164 @@ function BuyAsset() {
     quantity: ""
   });
 
+  const [suggestions, setSuggestions] = useState([]);
+  const [toast, setToast] = useState({
+    message: "",
+    type: "" // "success" | "error"
+  });
+
+  /* ================= YAHOO SEARCH (DEBOUNCED) ================= */
+  useEffect(() => {
+    if (form.symbol.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    const timeout = setTimeout(async () => {
+      try {
+        const res = await searchYahooSymbols(form.symbol);
+        setSuggestions(res.quotes || []);
+      } catch (err) {
+        setToast({
+          message: "Failed to fetch symbol suggestions",
+          type: "error"
+        });
+        setTimeout(
+          () => setToast({ message: "", type: "" }),
+          3000
+        );
+      }
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [form.symbol]);
+
+  /* ================= HANDLE BUY ================= */
   const handleBuy = async () => {
-    await buyAsset({
-      assetType: form.assetType,
-      symbol: form.symbol,
-      quantity: Number(form.quantity)
-    });
-    alert("Asset bought successfully");
+    if (!form.symbol || !form.quantity || Number(form.quantity) <= 0) {
+      setToast({
+        message: "Please enter valid symbol and quantity",
+        type: "error"
+      });
+      setTimeout(
+        () => setToast({ message: "", type: "" }),
+        3000
+      );
+      return;
+    }
+
+    try {
+      await buyAsset({
+        assetType: form.assetType,
+        symbol: form.symbol,
+        quantity: Number(form.quantity)
+      });
+
+      setToast({
+        message: `Bought ${form.quantity} units of ${form.symbol}`,
+        type: "success"
+      });
+
+      setTimeout(
+        () => setToast({ message: "", type: "" }),
+        3000
+      );
+
+      // reset form
+      setForm({
+        assetType: "STOCK",
+        symbol: "",
+        quantity: ""
+      });
+      setSuggestions([]);
+    } catch (err) {
+      setToast({
+        message:
+          err.response?.data?.message ||
+          "Buy failed. Please try again.",
+        type: "error"
+      });
+
+      setTimeout(
+        () => setToast({ message: "", type: "" }),
+        3000
+      );
+    }
   };
 
+  /* ================= RENDER ================= */
   return (
     <div className="buy-asset-container">
       <h2 className="buy-asset-title">Buy Asset</h2>
 
       <div className="buy-asset-form">
+        {/* Asset Type */}
         <select
           value={form.assetType}
-          onChange={(e) => setForm({ ...form, assetType: e.target.value })}
+          onChange={(e) =>
+            setForm({ ...form, assetType: e.target.value })
+          }
         >
           <option value="STOCK">STOCK</option>
           <option value="CRYPTO">CRYPTO</option>
         </select>
 
-        <input
-          placeholder="Symbol (AAPL, BTC)"
-          value={form.symbol}
-          onChange={(e) => setForm({ ...form, symbol: e.target.value })}
-        />
+        {/* Symbol Input + Suggestions */}
+        <div className="symbol-input-wrapper">
+          <input
+            placeholder="Symbol (AAPL, BTC)"
+            value={form.symbol}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                symbol: e.target.value.toUpperCase()
+              })
+            }
+          />
 
+          {suggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {suggestions.map((s) => (
+                <li
+                  key={s.symbol}
+                  onClick={() => {
+                    setForm({ ...form, symbol: s.symbol });
+                    setSuggestions([]);
+                  }}
+                >
+                  <strong>{s.symbol}</strong>
+                  <span className="muted">
+                    {" "}
+                    {s.shortname || s.longname}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Quantity */}
         <input
           type="number"
           placeholder="Quantity"
           value={form.quantity}
-          onChange={(e) => setForm({ ...form, quantity: e.target.value })}
+          onChange={(e) =>
+            setForm({ ...form, quantity: e.target.value })
+          }
         />
 
+        {/* Buy Button */}
         <button className="buy-asset-button" onClick={handleBuy}>
           Buy
         </button>
       </div>
+
+      {/* ===== Toast ===== */}
+      {toast.message && (
+        <div className={`toast ${toast.type}`}>
+          {toast.message}
+        </div>
+      )}
     </div>
   );
 }
