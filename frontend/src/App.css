@@ -1,8 +1,84 @@
+/* ================= THEME VARIABLES ================= */
+
+/* ---------- Light Mode ---------- */
+:root {
+  /* Base */
+  --bg-color: #f1f5f9;
+  --text-color: #0f172a;
+  --muted-text: #64748b;
+
+  /* Header */
+  --header-bg: #0f172a;
+  --header-text: #ffffff;
+
+  /* Cards */
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --card-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+
+  /* Inputs */
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
+  --input-placeholder: #94a3b8;
+  --input-focus: #2563eb;
+
+  /* Tables */
+  --table-header-bg: #f8fafc;
+  --table-border: #e2e8f0;
+
+  /* Buttons */
+  --primary-btn: #2563eb;
+  --primary-btn-hover: #1e40af;
+
+  --danger-btn: #dc2626;
+  --danger-btn-hover: #b91c1c;
+  --danger-focus: #dc2626;
+
+  /* Status */
+  --profit-color: #16a34a;
+  --loss-color: #dc2626;
+}
+
+/* ---------- Dark Mode ---------- */
+.dark {
+  --bg-color: #020617;
+  --text-color: #e5e7eb;
+  --muted-text: #94a3b8;
+
+  --header-bg: #020617;
+  --header-text: #f8fafc;
+
+  --card-bg: #020617;
+  --card-border: #1e293b;
+  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+
+  --input-bg: #020617;
+  --input-border: #1e293b;
+  --input-placeholder: #64748b;
+  --input-focus: #60a5fa;
+
+  --table-header-bg: #020617;
+  --table-border: #1e293b;
+
+  --primary-btn: #3b82f6;
+  --primary-btn-hover: #2563eb;
+
+  --danger-btn: #ef4444;
+  --danger-btn-hover: #dc2626;
+  --danger-focus: #f87171;
+
+  --profit-color: #22c55e;
+  --loss-color: #f87171;
+}
+
+/* ================= BASE STYLES ================= */
+
 body {
   margin: 0;
-  background-color: #f1f5f9;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   font-family: "Inter", system-ui, sans-serif;
-  color: #0f172a;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-container {
@@ -10,8 +86,8 @@ body {
 }
 
 .app-header {
-  background-color: #0f172a;
-  color: white;
+  background-color: var(--header-bg);
+  color: var(--header-text);
   padding: 18px 32px;
   font-size: 22px;
   font-weight: 800;
@@ -23,7 +99,7 @@ body {
   padding: 32px;
 }
 
-/* Sections */
+/* Layout sections */
 .top-section {
   margin-bottom: 32px;
 }
@@ -34,3 +110,52 @@ body {
   gap: 24px;
   margin-bottom: 32px;
 }
+
+input::placeholder {
+  color: var(--input-placeholder);
+}
+
+
+/* ===== Navigation Bar ===== */
+.app-nav {
+  display: flex;
+  gap: 12px;
+  padding: 12px 32px;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.app-nav button {
+  background: none;
+  border: none;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-color);
+  border-radius: 8px;
+}
+
+.app-nav button:hover {
+  background-color: rgba(100, 116, 139, 0.15);
+}
+
+.app-nav button.active {
+  background-color: var(--primary-btn);
+  color: white;
+}
+
+/* Reuse for header buttons */
+.nav-btn {
+  background-color: var(--primary-btn);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.nav-btn:hover {
+  background-color: var(--primary-btn-hover);
+}
+

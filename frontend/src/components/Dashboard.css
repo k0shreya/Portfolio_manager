@@ -7,9 +7,11 @@
   font-size: 26px;
   font-weight: 700;
   margin-bottom: 24px;
+  color: var(--text-color);
 }
 
-/* Summary cards */
+/* ================= Summary cards ================= */
+
 .dashboard-summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -18,35 +20,40 @@
 }
 
 .summary-card {
-  background: white;
+  background-color: var(--card-bg);
   padding: 22px;
   border-radius: 14px;
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .summary-label {
   font-size: 14px;
-  color: #64748b;
+  color: var(--muted-text);
 }
 
 .summary-value {
   font-size: 28px;
   font-weight: 800;
   margin-top: 6px;
+  color: var(--text-color);
 }
 
-/* Assets table */
+/* ================= Assets table ================= */
+
 .assets-section {
-  background: white;
+  background-color: var(--card-bg);
   padding: 22px;
   border-radius: 14px;
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease;
 }
 
 .assets-title {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 16px;
+  color: var(--text-color);
 }
 
 .assets-table {
@@ -57,27 +64,65 @@
 .assets-table th {
   text-align: left;
   padding: 12px;
-  background-color: #f8fafc;
+  background-color: var(--table-header-bg);
+  color: var(--text-color);
   font-size: 14px;
 }
 
 .assets-table td {
   padding: 12px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--table-border);
   font-size: 14px;
+  color: var(--text-color);
 }
 
+/* ================= Profit / Loss ================= */
+
 .profit {
-  color: #16a34a;
+  color: var(--profit-color);
   font-weight: 700;
 }
 
 .loss {
-  color: #dc2626;
+  color: var(--loss-color);
   font-weight: 700;
 }
+
+/* ================= Loading ================= */
 
 .dashboard-loading {
   padding: 40px;
   text-align: center;
+  color: var(--muted-text);
 }
+
+.profit {
+  color: var(--profit-color) !important;
+  font-weight: 700;
+}
+
+.loss {
+  color: var(--loss-color) !important;
+  font-weight: 700;
+}
+
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.chart-card {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+}
+
+.chart-card h4 {
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+

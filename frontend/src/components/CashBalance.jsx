@@ -15,6 +15,11 @@ function CashBalance() {
     setCash(res.data.cashBalance);
   };
 
+  // ✅ helper function (closed properly)
+  const formatAmount = (value) => {
+    return Number(value).toFixed(2);
+  };
+
   const addCash = async () => {
     await updateCashBalance(Number(amount));
     setAmount("");
@@ -25,7 +30,7 @@ function CashBalance() {
     <div className="cash-balance-container">
       <h2 className="cash-balance-title">Cash Balance</h2>
 
-      <div className="cash-balance-amount">$ {cash}</div>
+      <div className="cash-balance-amount">$ {formatAmount(cash)}</div>
 
       <div className="cash-balance-form">
         <input
