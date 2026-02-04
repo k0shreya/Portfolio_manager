@@ -5,6 +5,7 @@ import SellAsset from "./components/SellAsset";
 import Dashboard from "./components/Dashboard";
 import TransactionLog from "./components/TransactionLog";
 import GeminiChatbot from "./components/GeminiChatbot";
+import StockNews from "./components/StockNews";
 import "./App.css";
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
       {/* ===== Sidebar ===== */}
       <aside className="app-sidebar">
         <div className="sidebar-header">
-          <h2 className="sidebar-title">Fancy Admin</h2>
+          <h2 className="sidebar-title">Admin</h2>
         </div>
 
         <div className="sidebar-profile">
@@ -75,6 +76,14 @@ function App() {
           </button>
 
           <button
+            className={`nav-item ${activeView === "news" ? "active" : ""}`}
+            onClick={() => setActiveView("news")}
+          >
+            <span className="nav-icon">📰</span>
+            <span className="nav-text">Stock News</span>
+          </button>
+
+          <button
             className={`nav-item ${activeView === "chatbot" ? "active" : ""}`}
             onClick={() => setActiveView("chatbot")}
           >
@@ -94,6 +103,7 @@ function App() {
               {activeView === "buy" && "BUY ASSET"}
               {activeView === "sell" && "SELL ASSET"}
               {activeView === "transactions" && "TRANSACTIONS"}
+              {activeView === "news" && "STOCK NEWS"}
               {activeView === "chatbot" && "AI ASSISTANT"}
             </h1>
             <p className="page-subtitle">
@@ -102,6 +112,7 @@ function App() {
               {activeView === "buy" && "Purchase new assets"}
               {activeView === "sell" && "Sell your holdings"}
               {activeView === "transactions" && "View transaction history"}
+              {activeView === "news" && "Latest market headlines and updates"}
               {activeView === "chatbot" && "Ask me anything about your portfolio"}
             </p>
           </div>
@@ -119,6 +130,7 @@ function App() {
           {activeView === "buy" && <BuyAsset />}
           {activeView === "sell" && <SellAsset />}
           {activeView === "transactions" && <TransactionLog />}
+          {activeView === "news" && <StockNews />}
           {activeView === "chatbot" && <GeminiChatbot />}
         </div>
       </main>

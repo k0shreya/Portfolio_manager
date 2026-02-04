@@ -18,6 +18,19 @@ To enable the AI chatbot feature, you need to set up a Google Gemini API key:
 
 **Note:** The chatbot will display a warning if the API key is not set, but the rest of the application will function normally.
 
+### Stock News
+
+The dashboard includes a **Stock News** view that fetches market headlines directly from a public API (frontend-only).
+
+1. Get an API key from Alpha Vantage (News & Sentiment): `https://www.alphavantage.co/support/#api-key`
+2. In `frontend/.env`, add:
+   ```
+   REACT_APP_NEWS_API_KEY=your_api_key_here
+   ```
+3. Restart the dev server
+
+**Note:** If the key is missing or you hit rate limits, the UI will show an error banner, and the rest of the app will continue working.
+
 ## Available Scripts
 
 In the project directory, you can run:
