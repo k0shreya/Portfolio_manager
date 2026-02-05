@@ -61,6 +61,9 @@ function Dashboard() {
     value: Number((a.quantity * a.currentPrice).toFixed(2))
   }));
 
+  
+  
+
   const COLORS = ["#3b82f6", "#22c55e", "#f97316", "#ef4444"];
 
   /* ================= RENDER ================= */

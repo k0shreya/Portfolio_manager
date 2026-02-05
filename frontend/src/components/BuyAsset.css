@@ -133,3 +133,51 @@ input::placeholder {
     opacity: 1;
   }
 }
+
+.top-gainers-container {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--card-border);
+}
+
+.top-gainers-container h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-color);
+}
+
+.gainers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gainer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.gainer-item:last-child {
+  border-bottom: none;
+}
+
+.gainer-symbol {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.gainer-name {
+  flex: 1;
+  margin-left: 10px;
+  color: var(--muted-text);
+  font-size: 14px;
+}
+
+.gainer-change.positive {
+  color: #16a34a;
+  font-weight: 600;
+}
