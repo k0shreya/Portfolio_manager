@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// eslint-disable-next-line no-unused-vars
-import axios from "axios";
 import { buyAsset } from "../api/portfolioApi";
 import { searchYahooSymbols } from "../api/yahooApi";
 import "./BuyAsset.css";
@@ -13,14 +11,10 @@ function BuyAsset() {
   });
 
   const [suggestions, setSuggestions] = useState([]);
-  const [toast, setToast] = useState({
-    message: "",
-    type: "" // "success" | "error"
-  });
-
+  const [toast, setToast] = useState({ message: "", type: "" });
   const [gainers, setGainers] = useState([]);
 
-  /* ================= YAHOO SEARCH (DEBOUNCED) ================= */
+  /* ================= YAHOO SEARCH ================= */
   useEffect(() => {
     if (form.symbol.length < 2) {
       setSuggestions([]);
@@ -31,15 +25,8 @@ function BuyAsset() {
       try {
         const res = await searchYahooSymbols(form.symbol);
         setSuggestions(res.quotes || []);
-      } catch (err) {
-        setToast({
-          message: "Failed to fetch symbol suggestions",
-          type: "error"
-        });
-        setTimeout(
-          () => setToast({ message: "", type: "" }),
-          3000
-        );
+      } catch {
+        showToast("Failed to fetch symbol suggestions", "error");
       }
     }, 300);
 
@@ -50,28 +37,28 @@ function BuyAsset() {
   useEffect(() => {
     const fetchGainers = async () => {
       try {
-        const response = await fetch('https://financialmodelingprep.com/stable/biggest-gainers?apikey=ca8avN0dfOOIQMe8i8taDDlTRfxNXAFD');
-        const data = await response.json();
-        setGainers(data || []);
+        const res = await fetch(
+          "https://financialmodelingprep.com/stable/biggest-gainers?apikey=ca8avN0dfOOIQMe8i8taDDlTRfxNXAFD"
+        );
+        setGainers(await res.json());
       } catch (err) {
-        console.error('Failed to fetch gainers:', err);
+        console.error("Failed to fetch gainers", err);
       }
     };
 
     fetchGainers();
   }, []);
 
+  /* ================= TOAST HELPER ================= */
+  const showToast = (message, type) => {
+    setToast({ message, type });
+    setTimeout(() => setToast({ message: "", type: "" }), 3000);
+  };
+
   /* ================= HANDLE BUY ================= */
   const handleBuy = async () => {
-    if (!form.symbol || !form.quantity || Number(form.quantity) <= 0) {
-      setToast({
-        message: "Please enter valid symbol and quantity",
-        type: "error"
-      });
-      setTimeout(
-        () => setToast({ message: "", type: "" }),
-        3000
-      );
+    if (!form.symbol || Number(form.quantity) <= 0) {
+      showToast("Please enter valid symbol and quantity", "error");
       return;
     }
 
@@ -82,130 +69,117 @@ function BuyAsset() {
         quantity: Number(form.quantity)
       });
 
-      setToast({
-        message: `Bought ${form.quantity} units of ${form.symbol}`,
-        type: "success"
-      });
-
-      setTimeout(
-        () => setToast({ message: "", type: "" }),
-        3000
+      showToast(
+        `Bought ${form.quantity} units of ${form.symbol}`,
+        "success"
       );
 
-      // reset form
-      setForm({
-        assetType: "STOCK",
-        symbol: "",
-        quantity: ""
-      });
+      setForm({ assetType: "STOCK", symbol: "", quantity: "" });
       setSuggestions([]);
     } catch (err) {
-      setToast({
-        message:
-          err.response?.data?.message ||
-          "Buy failed. Please try again.",
-        type: "error"
-      });
+      const data = err.response?.data;
 
-      setTimeout(
-        () => setToast({ message: "", type: "" }),
-        3000
-      );
+      const msg =
+        data?.message ||
+        data?.error ||
+        (typeof data === "string" ? data : null) ||
+        "Insufficient cash balance";
+
+      showToast(msg, "error");
     }
   };
 
   /* ================= RENDER ================= */
   return (
-    <div className="buy-asset-container">
-      <h2 className="buy-asset-title">Buy Asset</h2>
+    <>
+      <div className="buy-asset-container">
+        <h2 className="buy-asset-title">Buy Asset</h2>
 
-      <div className="buy-asset-form">
-        {/* Asset Type */}
-        <select
-          value={form.assetType}
-          onChange={(e) =>
-            setForm({ ...form, assetType: e.target.value })
-          }
-        >
-          <option value="STOCK">STOCK</option>
-          <option value="CRYPTO">CRYPTO</option>
-        </select>
-
-        {/* Symbol Input + Suggestions */}
-        <div className="symbol-input-wrapper">
-          <input
-            placeholder="Symbol (AAPL, BTC)"
-            value={form.symbol}
+        <div className="buy-asset-form">
+          <select
+            value={form.assetType}
             onChange={(e) =>
-              setForm({
-                ...form,
-                symbol: e.target.value.toUpperCase()
-              })
+              setForm({ ...form, assetType: e.target.value })
+            }
+          >
+            <option value="STOCK">STOCK</option>
+            <option value="CRYPTO">CRYPTO</option>
+          </select>
+
+          <div className="symbol-input-wrapper">
+            <input
+              placeholder="Symbol (AAPL, BTC)"
+              value={form.symbol}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  symbol: e.target.value.toUpperCase()
+                })
+              }
+            />
+
+            {suggestions.length > 0 && (
+              <ul className="suggestions-list">
+                {suggestions.map((s) => (
+                  <li
+                    key={s.symbol}
+                    onClick={() => {
+                      setForm({ ...form, symbol: s.symbol });
+                      setSuggestions([]);
+                    }}
+                  >
+                    <strong>{s.symbol}</strong>
+                    <span className="muted">
+                      {" "}
+                      {s.shortname || s.longname}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <input
+            type="number"
+            placeholder="Quantity"
+            value={form.quantity}
+            onChange={(e) =>
+              setForm({ ...form, quantity: e.target.value })
             }
           />
 
-          {suggestions.length > 0 && (
-            <ul className="suggestions-list">
-              {suggestions.map((s) => (
-                <li
-                  key={s.symbol}
-                  onClick={() => {
-                    setForm({ ...form, symbol: s.symbol });
-                    setSuggestions([]);
-                  }}
-                >
-                  <strong>{s.symbol}</strong>
-                  <span className="muted">
-                    {" "}
-                    {s.shortname || s.longname}
+          <button className="buy-asset-button" onClick={handleBuy}>
+            Buy
+          </button>
+        </div>
+
+        <div className="top-gainers-container">
+          <h3>Top Gainers</h3>
+          {gainers.length > 0 ? (
+            <ul className="gainers-list">
+              {gainers.slice(0, 10).map((g, i) => (
+                <li key={i} className="gainer-item">
+                  <span className="gainer-symbol">{g.symbol}</span>
+                  <span className="gainer-name">{g.name}</span>
+                  <span className="gainer-change positive">
+                    +{g.change?.toFixed(2)}
                   </span>
                 </li>
               ))}
             </ul>
+          ) : (
+            <p>Loading top gainers...</p>
           )}
         </div>
-
-        {/* Quantity */}
-        <input
-          type="number"
-          placeholder="Quantity"
-          value={form.quantity}
-          onChange={(e) =>
-            setForm({ ...form, quantity: e.target.value })
-          }
-        />
-
-        {/* Buy Button */}
-        <button className="buy-asset-button" onClick={handleBuy}>
-          Buy
-        </button>
       </div>
 
-      {/* ===== Top Gainers ===== */}
-      <div className="top-gainers-container">
-        <h3>Top Gainers</h3>
-        {gainers.length > 0 ? (
-          <ul className="gainers-list">
-            {gainers.slice(0, 10).map((gainer, index) => (
-              <li key={index} className="gainer-item">
-                <span className="gainer-symbol">{gainer.symbol}</span>
-                <span className="gainer-name">{gainer.name}</span>
-                <span className="gainer-change positive">+{gainer.change?.toFixed(2) || gainer.changesPercentage?.toFixed(2) + '%'}</span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Loading top gainers...</p>
-        )}
-      </div>
-
-      {/* ===== Toast ===== */}
+      {/* ✅ TOAST OUTSIDE CONTAINER */}
       {toast.message && (
         <div className={`toast ${toast.type}`}>
           {toast.message}
         </div>
       )}
-    </div>
+    </>
   );
 }
 

@@ -110,18 +110,18 @@ function TransactionLog() {
       <div className="summary-cards">
         <div className="card">
           <h4>Total Invested</h4>
-          <p>₹{totalBuy.toFixed(2)}</p>
+          <p>${totalBuy.toFixed(2)}</p>
         </div>
 
         <div className="card">
           <h4>Total Realized</h4>
-          <p>₹{totalSell.toFixed(2)}</p>
+          <p>${totalSell.toFixed(2)}</p>
         </div>
 
         <div className="card">
           <h4>Amount Invested</h4>
             <p className="neutral">
-             ₹{amountInvested.toFixed(2)}
+             ${amountInvested.toFixed(2)}
             </p>
 
         </div>
@@ -194,7 +194,7 @@ function TransactionLog() {
                 {tx.transactionType}
               </td>
               <td>{tx.quantity}</td>
-              <td>₹{Math.abs(tx.amount).toFixed(2)}</td>
+              <td>${Math.abs(tx.amount).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
