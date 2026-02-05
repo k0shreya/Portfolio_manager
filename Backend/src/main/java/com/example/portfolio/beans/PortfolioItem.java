@@ -22,7 +22,7 @@ public class PortfolioItem {
     private String symbol;
     private int quantity;
 
-    // ✅ ADDED ONLY
+
     @Column(nullable = false)
     private double avgBuyPrice;
 }

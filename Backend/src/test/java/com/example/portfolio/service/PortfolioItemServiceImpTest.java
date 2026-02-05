@@ -1,4 +1,3 @@
-// language: java
 package com.example.portfolio.service;
 
 import com.example.portfolio.beans.*;

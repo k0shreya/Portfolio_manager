@@ -13,7 +13,7 @@ import lombok.*;
 public class CashBalance {
 
     @Id
-    private Integer id; // always 1
+    private Integer id;
 
     @Column(nullable = false)
     private double balance;

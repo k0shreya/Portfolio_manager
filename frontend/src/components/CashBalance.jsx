@@ -15,7 +15,7 @@ function CashBalance() {
     setCash(res.data.cashBalance);
   };
 
-  // ✅ helper function (closed properly)
+  //  helper function
   const formatAmount = (value) => {
     return Number(value).toFixed(2);
   };

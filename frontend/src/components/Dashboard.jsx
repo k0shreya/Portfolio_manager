@@ -123,7 +123,7 @@ function Dashboard() {
             </PieChart>
           </ResponsiveContainer>
 
-          {/* ✅ Custom legend (inside card, not SVG) */}
+          {/*  Custom legend */}
           <div className="pie-legend">
             {pieData.map((entry, index) => (
               <div key={entry.name} className="legend-item">

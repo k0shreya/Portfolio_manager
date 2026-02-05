@@ -44,7 +44,7 @@ public class PortfolioItemController {
         return portfolioItemService.updateCash(request);
     }
 
-    // ✅ Yahoo symbol search (FIXED)
+
     @GetMapping("/yahoo/search")
     public ResponseEntity<String> searchYahoo(@RequestParam String q) {
 

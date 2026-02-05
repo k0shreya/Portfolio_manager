@@ -50,7 +50,7 @@ function SellAsset() {
         quantity: qty
       });
 
-      // ✅ success toast
+      // success toast
       setToast({
         message: `Sold ${qty} units of ${asset.symbol}`,
         type: "success"

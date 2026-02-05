@@ -34,7 +34,7 @@ const News = () => {
 
   useEffect(() => {
     const fetchStockNews = async () => {
-      const API_KEY = process.env.REACT_APP_NEWS_API_KEY;       // Check the API key value
+      const API_KEY = process.env.REACT_APP_NEWS_API_KEY;      
     
       const pageSize = 50;
       const url = `https://newsapi.org/v2/top-headlines?category=business&language=en&pageSize=${pageSize}&apiKey=${API_KEY}`;

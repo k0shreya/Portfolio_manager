@@ -190,24 +190,6 @@ public class PortfolioItemServiceImp implements PortfolioItemService {
 
     // ---------- YAHOO ----------
 
-//    private double getLivePrice(String symbol) {
-//        try {
-//            String url =
-//                    "https://query1.finance.yahoo.com/v8/finance/chart/" + symbol;
-//
-//            YahooResponse response =
-//                    restTemplate.getForObject(url, YahooResponse.class);
-//
-//            return response.getChart()
-//                    .getResult()
-//                    .get(0)
-//                    .getMeta()
-//                    .getRegularMarketPrice();
-//
-//        } catch (Exception e) {
-//            return 100.0; // fallback for demo safety
-//        }
-//    }
 
     private double getLivePrice(String symbol) {
         try {

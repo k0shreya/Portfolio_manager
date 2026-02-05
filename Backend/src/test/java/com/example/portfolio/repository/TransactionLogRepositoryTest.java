@@ -1,4 +1,3 @@
-// java
 package com.example.portfolio.repository;
 
 import org.junit.jupiter.api.Test;

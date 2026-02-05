@@ -173,7 +173,7 @@ function BuyAsset() {
         </div>
       </div>
 
-      {/* ✅ TOAST OUTSIDE CONTAINER */}
+      {/* TOAST OUTSIDE CONTAINER */}
       {toast.message && (
         <div className={`toast ${toast.type}`}>
           {toast.message}
