@@ -2,5 +2,5 @@ package com.example.portfolio.beans;
 
 public enum AssetType {
     STOCK,
-    CRYPTO
+    BOND, REAL_ESTATE, CRYPTO
 }
