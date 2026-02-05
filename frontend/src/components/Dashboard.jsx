@@ -7,11 +7,12 @@ import {
   Cell,
   BarChart,
   Bar,
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
+  CartesianGrid,
   ResponsiveContainer
 } from "recharts";
 
@@ -107,9 +108,10 @@ function Dashboard() {
                 data={pieData}
                 dataKey="value"
                 nameKey="name"
-                outerRadius={80}
+                outerRadius={70}
+                innerRadius={35}
                 label={({ percent }) =>
-                  `${(percent * 100).toFixed(1)}%`
+                  `${(percent * 100).toFixed(0)}%`
                 }
               >
                 {pieData.map((entry, index) => (
@@ -119,7 +121,6 @@ function Dashboard() {
                   />
                 ))}
               </Pie>
-              <Tooltip />
             </PieChart>
           </ResponsiveContainer>
 
@@ -146,11 +147,19 @@ function Dashboard() {
         <div className="chart-card">
           <h4>Value by Symbol</h4>
           <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={barData}>
-              <XAxis dataKey="symbol" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#6366f1" />
+            <BarChart data={barData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(100, 116, 139, 0.15)" />
+              <XAxis dataKey="symbol" stroke="rgba(100, 116, 139, 0.5)" />
+              <YAxis stroke="rgba(100, 116, 139, 0.5)" />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: "rgba(15, 20, 30, 0.95)",
+                  border: "1px solid rgba(59, 130, 246, 0.3)",
+                  borderRadius: "8px",
+                  color: "#e5e7eb"
+                }}
+              />
+              <Bar dataKey="value" fill="#3b82f6" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -159,17 +168,32 @@ function Dashboard() {
         <div className="chart-card">
           <h4>Profit / Loss</h4>
           <ResponsiveContainer width="100%" height={260}>
-            <LineChart data={lineData}>
-              <XAxis dataKey="symbol" />
-              <YAxis />
-              <Tooltip />
-              <Line
+            <AreaChart data={lineData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+              <defs>
+                <linearGradient id="colorPnl" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(100, 116, 139, 0.15)" />
+              <XAxis dataKey="symbol" stroke="rgba(100, 116, 139, 0.5)" />
+              <YAxis stroke="rgba(100, 116, 139, 0.5)" />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: "rgba(15, 20, 30, 0.95)",
+                  border: "1px solid rgba(59, 130, 246, 0.3)",
+                  borderRadius: "8px",
+                  color: "#e5e7eb"
+                }}
+              />
+              <Area
                 type="monotone"
                 dataKey="pnl"
-                stroke="#16a34a"
+                stroke="#22c55e"
                 strokeWidth={3}
+                fill="url(#colorPnl)"
               />
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>

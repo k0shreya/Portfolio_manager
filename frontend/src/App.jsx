@@ -8,11 +8,13 @@ import News from "./components/News";
 import "./App.css";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [activeView, setActiveView] = useState("dashboard"); // default
 
   useEffect(() => {
-    document.body.classList.toggle("dark", darkMode);
+    // Our default theme variables are dark in :root and light in .light.
+    // Add/remove the `light` class when darkMode changes so the toggle works.
+    document.body.classList.toggle("light", !darkMode);
   }, [darkMode]);
 
   return (
@@ -26,7 +28,7 @@ function App() {
             onClick={() => setDarkMode(!darkMode)}
             className="nav-btn"
           >
-            {darkMode ? "☀ Light" : "🌙 Dark"}
+            {darkMode ? "🌙 Dark" : "☀ Light"}
           </button>
         </div>
       </header>

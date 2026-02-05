@@ -1,19 +1,92 @@
 /* CashBalance.css */
 .cash-balance-container {
-  background: linear-gradient(135deg, #2563eb, #1e40af);
+  position: relative;
+  background: linear-gradient(135deg, #0b1220 0%, #111827 60%);
   color: white;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+  border-radius: 14px;
+  padding: 18px 18px;
+  min-height: 110px;
+  box-shadow: 0 10px 20px rgba(2, 6, 23, 0.55), 0 6px 10px rgba(59, 130, 246, 0.06);
 }
 
-.cash-balance-label {
-  font-size: 14px;
+/* decorative sparkline SVG placed behind the content */
+.cash-balance-container::before {
+  content: "";
+  position: absolute;
+  right: -8%;
+  top: 8px;
+  width: 50%;
+  height: 70%;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2080'%3E%3Cpath%20d='M0%2060%20L30%2050%20L60%2040%20L90%2045%20L120%2030%20L150%2035%20L180%2020%20L210%2030%20L240%2010%20L300%2020'%20stroke='%2360a5fa'%20stroke-width='3'%20fill='none'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='0.18'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
   opacity: 0.9;
+  pointer-events: none;
+}
+
+.cash-balance-title {
+  font-size: 14px;
+  color: #cbd5e1;
+  margin: 0 0 6px 0;
+  font-weight: 700;
 }
 
 .cash-balance-amount {
   font-size: 36px;
   font-weight: 800;
-  margin-top: 6px;
+  margin-top: 4px;
+  color: #ffffff;
+  z-index: 2;
+  position: relative;
+}
+
+.cash-balance-form {
+  margin-top: 18px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  z-index: 2;
+}
+
+.cash-balance-form input {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-color, #e5e7eb);
+  padding: 14px 16px;
+  border-radius: 12px;
+  outline: none;
+  min-width: 220px;
+  font-weight: 700;
+  font-size: 16px;
+  flex: 1;
+}
+
+.cash-balance-form input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.cash-balance-button {
+  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 12px 28px rgba(59, 130, 246, 0.26);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+
+.cash-balance-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.28);
+}
+
+@media (max-width: 720px) {
+  .cash-balance-amount { font-size: 28px; }
+  .cash-balance-container::before { width: 80%; right: -12%; }
+  .cash-balance-form { flex-direction: column; align-items: stretch; gap: 8px; }
+  .cash-balance-form input { width: 100%; }
 }
