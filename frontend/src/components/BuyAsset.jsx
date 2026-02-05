@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { buyAsset } from "../api/portfolioApi";
 import { searchYahooSymbols } from "../api/yahooApi";
 import "./BuyAsset.css";
