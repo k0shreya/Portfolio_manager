@@ -16,6 +16,8 @@ function BuyAsset() {
     type: "" // "success" | "error"
   });
 
+  const [gainers, setGainers] = useState([]);
+
   /* ================= YAHOO SEARCH (DEBOUNCED) ================= */
   useEffect(() => {
     if (form.symbol.length < 2) {
@@ -41,6 +43,21 @@ function BuyAsset() {
 
     return () => clearTimeout(timeout);
   }, [form.symbol]);
+
+  /* ================= FETCH TOP GAINERS ================= */
+  useEffect(() => {
+    const fetchGainers = async () => {
+      try {
+        const response = await fetch('https://financialmodelingprep.com/stable/biggest-gainers?apikey=ca8avN0dfOOIQMe8i8taDDlTRfxNXAFD');
+        const data = await response.json();
+        setGainers(data || []);
+      } catch (err) {
+        console.error('Failed to fetch gainers:', err);
+      }
+    };
+
+    fetchGainers();
+  }, []);
 
   /* ================= HANDLE BUY ================= */
   const handleBuy = async () => {
@@ -160,6 +177,24 @@ function BuyAsset() {
         <button className="buy-asset-button" onClick={handleBuy}>
           Buy
         </button>
+      </div>
+
+      {/* ===== Top Gainers ===== */}
+      <div className="top-gainers-container">
+        <h3>Top Gainers</h3>
+        {gainers.length > 0 ? (
+          <ul className="gainers-list">
+            {gainers.slice(0, 10).map((gainer, index) => (
+              <li key={index} className="gainer-item">
+                <span className="gainer-symbol">{gainer.symbol}</span>
+                <span className="gainer-name">{gainer.name}</span>
+                <span className="gainer-change positive">+{gainer.change?.toFixed(2) || gainer.changesPercentage?.toFixed(2) + '%'}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Loading top gainers...</p>
+        )}
       </div>
 
       {/* ===== Toast ===== */}
