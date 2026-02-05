@@ -8,7 +8,14 @@ import GeminiChatbot from "./components/GeminiChatbot";
 import StockNews from "./components/StockNews";
 import "./App.css";
 
+
+
+
 function App() {
+
+  
+
+
   const [activeView, setActiveView] = useState("dashboard");
 
   // Force dark mode to match the reference image

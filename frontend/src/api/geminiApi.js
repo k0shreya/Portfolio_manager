@@ -5,7 +5,8 @@
  * The API key should be set in environment variable: REACT_APP_GEMINI_API_KEY
  */
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+const GEMINI_API_URL =
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
 /**
  * Send a message to Gemini API and get a response
